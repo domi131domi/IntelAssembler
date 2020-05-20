@@ -1,73 +1,44 @@
-#include <GLFW/glfw3.h>
+#include <GL/glut.h>
 #include <iostream>
+#include "f.hpp"
 
-void keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods);
+void keyCallback(unsigned char, int, int);
 void draw();
 const int width = 640;
 const int height = 480;
-unsigned char arr[height][width*3];
+unsigned char* arr = 0;
 int wysokosc = 0;
 
-int main(void)
-{
+int main(int argc, char** argv) {
 	
-
-	GLFWwindow* window;
-	
-
-	/* Initialize the library */
-	if (!glfwInit())
-		return -1;
-
-	/* Create a windowed mode window and its OpenGL context */
-	window = glfwCreateWindow(width, height, "ProjektIntel", NULL, NULL);
-	glfwSetKeyCallback(window, keyCallback);
-
-	if (!window)
-	{
-		glfwTerminate();
-		return -1;
-	}
-
-	/* Make the window's context current */
-	glfwMakeContextCurrent(window);
+	arr = new unsigned char[width*height*3];
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_SINGLE);
+	glutInitWindowPosition(250,250);
+	glutInitWindowSize(width,height);
+	glutCreateWindow("IntelAssembler");
+	glutSetKeyRepeat(GLUT_KEY_REPEAT_OFF);
+	glutKeyboardFunc(keyCallback);
 	draw();
-	/* Loop until the user closes the window */
-	while (!glfwWindowShouldClose(window))
-	{
-		
-		glDrawPixels(width, height, GL_RGB, GL_UNSIGNED_BYTE, &arr);
-
-		/* Swap front and back buffers */
-		glfwSwapBuffers(window);
-
-		/* Poll for and process events */
-		glfwPollEvents();
-	}
-
-	glfwTerminate();
+	glutSwapBuffers();
+	glutMainLoop();
 	return 0;
 }
 
-void keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods) {
-
-	if (key == GLFW_KEY_UP && action == GLFW_PRESS ) {
+void keyCallback(unsigned char key, int x, int y) {
+	if (key == 'w') {
 		std::cout << "nacisk gora" << std::endl;
 		wysokosc+=10;
-		draw();
 	}
-	else if (key == GLFW_KEY_DOWN && action == GLFW_PRESS) {
+	else if (key == 's') {
 		std::cout << "nacisk dol" << std::endl;
 		wysokosc-=10;
-		draw();
 	}
+	draw();
 }
 
 void draw() {
-	for (int e = 0; e < height; e++)
-		for (int i = 0; i < width * 3; i++)
-			if (e == wysokosc)
-				arr[e][i] = 255;
-			else
-				arr[e][i] = 150;
+	f(arr, width, height, wysokosc);
+	glDrawPixels(width, height, GL_RGB, GL_UNSIGNED_BYTE, arr);
+	glutSwapBuffers();
 }
