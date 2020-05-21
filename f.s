@@ -6,15 +6,17 @@ f:
 	push rbp
 	mov  rbp, rsp
 
-	;rdi	,rsi	,rdx	,rcx
-	;arr	,width	,height	,wysokosc
+	;rdi	,rsi	,rdx	,rcx	,r8	,r9, [rbp + 16],[rbp + 24]
+	;arr	,width	,height	,S	,A	,B	,C	,D
 
-	sub rsp, 32
+	sub rsp, 48
 
 	mov [rbp - 8], rdi	;arr
 	mov [rbp - 16], rsi	;width
 	mov [rbp - 24], rdx	;height
-	mov [rbp - 32], rcx	;wysokosc
+	mov [rbp - 32], rcx	;S
+	mov [rbp - 40], r8	;A
+	mov [rbp - 48], r9	;B
 
 	mov r11, 0	;y iterator
 
@@ -39,8 +41,6 @@ loopX:
 	mov [rdi + rax], r9b
 	mov [rdi + rax + 1], r9b
 	mov [rdi + rax + 2], r9b
-	
-
 
 	add r10, 1
 	cmp r10, [rbp - 16]
