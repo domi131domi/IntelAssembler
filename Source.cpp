@@ -15,11 +15,11 @@ const int dA = 1;
 const int dB = 1;
 const int dC = 1;
 const int dD = 1;
-int S = 0;
-int A = 0;
-int B = 0;
-int C = 0;
-int D = 0;
+long long S = 0;
+long long A = 0;
+long long B = 0;
+long long C = 0;
+long long D = 0;
 enum Option {
 	OS, OA, OB, OC, OD
 } option = OS;
@@ -39,6 +39,7 @@ int main(int argc, char** argv) {
 	setText();
 	glutSwapBuffers();
 	glutMainLoop();
+	delete[] arr;
 	return 0;
 }
 
