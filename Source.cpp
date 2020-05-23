@@ -10,7 +10,7 @@ void setText();
 const int width = 640;
 const int height = 480;
 unsigned char* arr = 0;
-const int dS = 10;
+const int dS = 1;
 const int dA = 1;
 const int dB = 1;
 const int dC = 1;
